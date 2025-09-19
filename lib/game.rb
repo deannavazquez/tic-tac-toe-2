@@ -1,9 +1,32 @@
 # Controls flow and state of game
-
+require_relative 'player'
 class Game
+  attr_accessor :board, :player1, :player2
+
   def initialize
     welcome_message
-    # @current_player = 0
+    initialize_players
+    @board = create_board
+    # @current_player_index = 0
+  end
+
+  def initialize_players
+    @player1 = Player.new(1, 'X')
+    @player2 = Player.new(2, '0')
+  end
+
+  def create_board
+    Array.new(3) { Array.new(3, ' ') }
+  end
+
+  def print_board
+    puts ' 0   1   2'
+    sep = ' ---+---+---'
+    @board.each_with_index do |row, r|
+      print r
+      puts " #{row[0]} | #{row[1]} | #{row[2]} "
+      puts sep unless r == 2
+    end
   end
 
   def welcome_message # rubocop:disable Metrics/MethodLength
